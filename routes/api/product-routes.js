@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
       },
     ],
   })
-    .then((dbProductData) => res.json(dbProductData))
+    .then((productData) => res.json(productData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -46,14 +46,14 @@ router.get("/:id", (req, res) => {
       },
     ],
   })
-    .then((dbProductData) => {
-      if (!dbProductData) {
+    .then((productData) => {
+      if (!productData) {
         res
           .status(404)
           .json({ message: "There was no product found with this id." });
         return;
       }
-      res.json(dbProductData);
+      res.json(productData);
     })
     .catch((err) => {
       console.log(err);
@@ -63,12 +63,12 @@ router.get("/:id", (req, res) => {
 
 // create new product
 router.post("/", (req, res) => {
-  /* req.body should look like this...
+  /* req.body sample request
     {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
+	    "product_name": "Running this test adder",
+		  "price": 90,
+		  "stock": 25,
+		  "category_id": 3
     }
   */
   Product.create(req.body)
@@ -142,14 +142,14 @@ router.delete("/:id", (req, res) => {
       id: req.params.id,
     },
   })
-    .then((dbProductData) => {
-      if (!dbProductData) {
+    .then((productData) => {
+      if (!productData) {
         res
           .status(404)
           .json({ message: "There was no product found with this id." });
         return;
       }
-      res.json(dbProductData);
+      res.json(productData);
     })
     .catch((err) => {
       console.log(err);
